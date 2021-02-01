@@ -28,7 +28,7 @@ public class Consumer {
             try {
                 session.recover();
             } catch (JMSException ex) {
-                log.error("Failed to roll back message");
+                log.error("Failed to recover message");
             }
         }
     }
