@@ -15,21 +15,20 @@ public class Consumer {
     @JmsListener(
             destination = "${spring.activemq.queue-name}",
             containerFactory = "jmsQueueListener",
-            concurrency = "2-10")
+            concurrency = "1-2")
     public void receive(final TextMessage msg, Session session) {
         try {
             log.info("received message: {}", msg.getText());
             if ("msg-2".equals(msg.getText())) {
-                throw new RuntimeException("Threw exception");
+                throw new RuntimeException("test exception");
             }
             msg.acknowledge();
-            Thread.sleep(500);
         } catch (Exception e) {
-            try {
-                session.recover();
-            } catch (JMSException ex) {
-                log.error("Failed to recover message");
-            }
+//            try {
+//                session.recover();
+//            } catch (JMSException ex) {
+//                log.error("Failed to recover message");
+//            }
         }
     }
 }
